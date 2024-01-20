@@ -5,10 +5,15 @@ export default function Form({ items, setItems }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
 
+  // Async function to handle form submission
   async function handleSubmit(event) {
+    // Preventing the default form submission behavior
     event.preventDefault();
+    // Creating a FormData object from the form
     const formData = new FormData(event.target);
+    // Converting FormData to an object using 'Object.fromEntries'
     const formValues = Object.fromEntries(formData);
+    // Sending POST request to the server with form data
     await fetch("http://localhost:8080/posts", {
       method: "POST",
       headers: {
@@ -16,13 +21,14 @@ export default function Form({ items, setItems }) {
       },
       body: JSON.stringify(formValues),
     });
-
+    // Updating the 'items' state (without this it keeps updating the handleSubmit function)
     setItems(items);
+    // Resetting the form fields to their initial state
     event.target.reset();
   }
-
+  // Rendering the form JSX structure, creatig drop downs and text entry fields as well as submit button
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form onSubmit={handleSubmit} className="formContainer">
       <label>Name</label>
       <select
         required

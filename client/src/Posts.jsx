@@ -1,27 +1,40 @@
+// import Link component to replac 'a href'
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+// Declaring a state variable 'items' and a function 'setItems'
 export default function Posts() {
   const [items, setItems] = useState([]);
 
+  // Using 'useEffect' to fetch data and defining an asynchronous function 'fetchData' to fetch data from an API
   useEffect(function () {
     async function fetchData() {
+      // Sending a request to the specified port
       const response = await fetch("http://localhost:8080/posts");
+      // Parsing the JSON data from the response
       const data = await response.json();
+      // Update 'items' state with fetched data
       setItems(data);
     }
+    // Calling 'fetchData' function when the component mounts using an empty dependency array
     fetchData();
+    // Empty dependency array ensures 'useEffect' only runs once
   }, []);
 
+  // Render part of the component
   return (
-    <div>
+    <div className="postBoard">
       <h2>Posts</h2>
+      {/* Mapping through the 'items' array, rendering each post */}
       {items.map(function (item) {
         return (
+          // Each post is wrapped in a div with a unique key based on post properties
           <div
-            className="post-container"
+            className="postContainer"
             key={item.name + item.content + item.id}
           >
+            {" "}
+            {/* Creating a link to a post using the post's ID */}
             <Link to={`/posts${item.id}`}>{item.title}</Link>
           </div>
         );

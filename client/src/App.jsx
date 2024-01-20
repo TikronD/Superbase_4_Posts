@@ -40,9 +40,9 @@ export default function App() {
               key={item.name + item.content + item.id}
               path={`/posts${item.id}`}
               element={
-                <div>
-                  <h2>{item.name}</h2>
-                  <h2>{item.content}</h2>
+                <div className="postStyle">
+                  <h3>{item.name}</h3>
+                  <p>{item.content}</p>
                 </div>
               }
             />
